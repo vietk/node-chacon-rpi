@@ -15,7 +15,8 @@ Where
 
 ## Docker image 
 Image name kviet/node-rpi-chacon
-The docker image expose the port 8080 in order to target the endpoint.
+
+The docker image expose the port 8080 in order to target the endpoint. 
 The container should be started with enough priviliged to be able to use the GPIO of the RPI
 
 * Example : 
