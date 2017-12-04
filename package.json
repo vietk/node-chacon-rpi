@@ -8,6 +8,6 @@
   "dependencies": {
     "debug": "~2.6.9",
     "express": "~4.15.5",
-    "wiring-pi": "^2.4.4"
+    "wiringpi-node": "^2.4.4"
   }
 }

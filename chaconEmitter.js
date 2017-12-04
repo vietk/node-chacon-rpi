@@ -10,7 +10,7 @@ function init(GPIOPin) {
   }
   wpi.setup('wpi');
   wpi.pinMode(pin, wpi.OUTPUT);
-  //console.log('wpi setup on PIN :' + pin);
+  console.log('wpi setup on PIN :' + pin);
 }
 
 function setWPI(awpi) {
@@ -137,7 +137,7 @@ function doTransmit(order, dimmer) {
   wpi.digitalWrite(pin, wpi.HIGH);
   wpi.delayMicroseconds(275);
   wpi.digitalWrite(pin, wpi.LOW);
-  //console.log('transmit finished');
+  // console.log('transmit finished');
 }
 
 // exports
