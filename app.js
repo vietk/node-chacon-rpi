@@ -1,4 +1,4 @@
-var chaconEmitter = require('./chaconEmitter');
+var chaconEmitter = require('./chaconEmitter');var chaconEmitter = require('./chaconEmitter');
 var express = require('express');
 var path = require('path');
 
@@ -7,6 +7,14 @@ var pin = 0
 var app = express();
 
 chaconEmitter.init();
+
+function sendOnCommand(emitterId, deviceId) {
+    chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, true));
+}
+
+function sendOffCommand(emitterId, deviceId) {
+    chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, false));
+}
 
 app.get('/switch/:deviceId/:emitterId/:state', function (req, res) {
     var deviceId = parseInt(req.params.deviceId);
@@ -17,25 +25,35 @@ app.get('/switch/:deviceId/:emitterId/:state', function (req, res) {
 
     // console.log('deviceId:%s', deviceId);
     // console.log('emitterId:%s', emitterId);
-    // console.log('state:%s', state); 
+    // console.log('state:%s', state);
 
     if (state == 'on') {
-        chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, true));
+        sendOnCommand(emitterId, deviceId);
     }
     else if (state == 'off') {
-        chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, false));
+        sendOffCommand(emitterId, deviceId);
     }
     else if (state == 'dim') {
-        var dimValue = parseInt(req.query.value);
-	// console.log('dimValue:%s', dimValue);
-	if (0 <= dimValue && dimValue <= 100) {
-	   // console.log('dimming!');
-           chaconEmitter.transmit(chaconEmitter.buildDimOrder(emitterId, deviceId, dimValue), true);
-	}
+        var dimValue = req.query.value;
+        if (dimValue == 'ON') {
+            sendOnCommand(emitterId, deviceId);
+        }
+        else if (dimValue == 'OFF') {
+            sendOffCommand(emitterId, deviceId);
+        }
+        else {
+            dimValue = parseInt(req.query.value);
+            // console.log('dimValue:%s', dimValue);
+            if (0 <= dimValue && dimValue <= 100) {
+                // console.log('dimming!');
+                chaconEmitter.transmit(chaconEmitter.buildDimOrder(emitterId, deviceId, dimValue), true);
+            }
+        }
     }
 
     res.status(200);
     res.send();
 });
 
-app.listen(8089);
+app.listen(8080, '0.0.0.0');
+
