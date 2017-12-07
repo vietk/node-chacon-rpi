@@ -9,5 +9,6 @@
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "wiringpi-node": "^2.4.4"
+    "mqtt": "^2.14.0"
   }
 }

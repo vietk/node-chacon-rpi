@@ -1,4 +1,4 @@
-var chaconEmitter = require('./chaconEmitter');var chaconEmitter = require('./chaconEmitter');
+var chaconEmitter = require('./chaconEmitter');
 var express = require('express');
 var path = require('path');
 
@@ -14,6 +14,10 @@ function sendOnCommand(emitterId, deviceId) {
 
 function sendOffCommand(emitterId, deviceId) {
     chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, false));
+}
+
+function sendDimCommand(emitterId, deviceId, dimValue) {
+    chaconEmitter.transmit(chaconEmitter.buildDimOrder(emitterId, deviceId, dimValue), true);
 }
 
 app.get('/switch/:deviceId/:emitterId/:state', function (req, res) {
@@ -46,7 +50,7 @@ app.get('/switch/:deviceId/:emitterId/:state', function (req, res) {
             // console.log('dimValue:%s', dimValue);
             if (0 <= dimValue && dimValue <= 100) {
                 // console.log('dimming!');
-                chaconEmitter.transmit(chaconEmitter.buildDimOrder(emitterId, deviceId, dimValue), true);
+                sendDimCommand(emitterId, deviceId, dimValue);
             }
         }
     }
