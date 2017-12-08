@@ -24,6 +24,12 @@ client.subscribe(dimmerTopic, function (err, result) {
 
 console.log('Client subscription done');
 
+client.on('connect', function() {
+    console.log('Connected');
+});
+client.on('error', function(){
+    console.log('Error');
+});
 client.on('message', function (topic, message) {
 
     console.log('Received message %s on topic %s', message.toString(), topic);
