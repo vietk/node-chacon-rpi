@@ -8,8 +8,19 @@ var switchTopic = 'chacon/switch';
 var dimmerTopic = 'chacon/dimmer';
 var emitterId = 12325261;
 
-client.subscribe(switchTopic);
-client.subscribe(dimmerTopic);
+client.subscribe(switchTopic, function (err, result) {
+    if (err) {
+        console.error(err);
+    }
+    console.log(result);
+});
+
+client.subscribe(dimmerTopic, function (err, result) {
+    if (err) {
+        console.error(err);
+    }
+    console.log(result);
+});
 
 console.log('Client subscription done');
 
