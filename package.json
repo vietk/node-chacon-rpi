@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node mqtt-client.js"
   },
   "dependencies": {
     "debug": "~2.6.9",
     "express": "~4.15.5",
-    "wiringpi-node": "^2.4.4"
+    "wiringpi-node": "^2.4.4",
     "mqtt": "^2.14.0"
   }
 }

@@ -15,6 +15,7 @@ COPY package.json /app
 RUN npm install
 COPY app.js /app
 COPY chaconEmitter.js /app
+COPY mqtt-client.js /app
 
 EXPOSE 8080
 CMD ["npm", "start"]

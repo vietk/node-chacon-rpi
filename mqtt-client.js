@@ -1,5 +1,5 @@
 var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://mosquitto');
+var client  = mqtt.connect('mqtt://localhost:1883');
 var chaconEmitter = require('./chaconEmitter');
 
 chaconEmitter.init();
@@ -11,7 +11,11 @@ var emitterId = 12325261;
 client.subscribe(switchTopic);
 client.subscribe(dimmerTopic);
 
+console.log('Client subscription done');
+
 client.on('message', function (topic, message) {
+
+    console.log('Received message %s on topic %s', message.toString(), topic);
 
     var command = JSON.parse(message.toString());
     var deviceId = command.deviceId;
@@ -39,6 +43,8 @@ client.on('message', function (topic, message) {
     }
 });
 
+console.log('exiting');
+
 function sendOnCommand(emitterId, deviceId) {
     chaconEmitter.transmit(chaconEmitter.buildOrder(emitterId, deviceId, true));
 }
@@ -50,3 +56,4 @@ function sendOffCommand(emitterId, deviceId) {
 function sendDimCommand(emitterId, deviceId, dimValue) {
     chaconEmitter.transmit(chaconEmitter.buildDimOrder(emitterId, deviceId, dimValue), true);
 }
+
